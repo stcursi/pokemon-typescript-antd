@@ -1,0 +1,53 @@
+type PageInfo {
+  endCursor: ID
+  hasNextPage: Boolean
+}
+
+type Evolution {
+  name: String
+  id: Int
+}
+
+type EvolutionRequirements {
+  amount: Int
+  name: String
+}
+
+type Attacks {
+  fast: [Attack]
+  special: [Attack]
+}
+
+type Attack {
+  name: String
+  type: String
+  damage: Int
+}
+
+type Pokemon {
+  id: ID!
+  name: String
+  types: [String]
+  classification: String
+  resistant: [String]
+  weaknesses: [String]
+  evolutions: [Evolution]
+  evolutionRequirements: EvolutionRequirements
+  attacks: Attacks
+}
+
+type PokemonEdge {
+  cursor: ID!
+  node: Pokemon
+}
+
+type PokemonsConnection {
+  edges: [PokemonEdge]
+  pageInfo: PageInfo
+}
+
+type Query {
+  pokemons(q: String, after: ID, limit: Int): PokemonsConnection
+
+  pokemonsByType(type: String!, after: ID, limit: Int): PokemonsConnection
+}
